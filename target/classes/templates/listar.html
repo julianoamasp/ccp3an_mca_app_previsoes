@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Hello Spring Boot</title>
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet" />
+</head>
+
+		<form class="form-inline" method="get" action="/listar" style="margin: 20px 0">
+			<input type="text" class="form-control" placeholder="Nome" name="nome"/>
+			<button type="submit" class="btn btn-primary">Adicionar</button>
+		</form>
+
+<body>
+	<h1>Previsões</h1>
+		<table class="table">
+			<thead>
+				<tr>
+				<th>Dia</th>
+				<th>Temperatura mínima</th>
+				<th>Temperatura máxima</th>
+				<th>Humidade relativa do ar</th>
+				<th>Descrição</th>
+				<th>Data</th>
+				<th>Cidade</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dia : ${dias}">
+				<td th:text="${dia.nome}"></td>
+				
+				<td th:text="${dia.getTempo().getTmin()}"></td>
+				<td th:text="${dia.getTempo().getTmax()}"></td>
+				<td th:text="${dia.getTempo().getHumidade()}"></td>
+				<td th:text="${dia.getTempo().getDescricao()}"></td>
+				<td th:text="${dia.getTempo().getData()}"></td>
+				
+				<td th:text="${dia.getCidade().getNome()}"></td>
+				<td th:text="${dia.getCidade().getLatitude()}"></td>
+				<td th:text="${dia.getCidade().getLongitude()}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<form class="form-inline" method="POST" th:object="${dia}" th:action="@{/listar}" style="margin: 20px 0">
+			<input type="text" class="form-control" placeholder="Nome" th:field="*{nome}"/>
+			
+			<input type="number" class="form-control" placeholder="Temperatura máxima" th:field="*{tempo.tmax}"/>
+			<input type="number" class="form-control" placeholder="Temepratura mínima" th:field="*{tempo.tmin}"/>
+			<input type="number" class="form-control" placeholder="Humidade" th:field="*{tempo.humidade}"/>
+			<input type="text" class="form-control" placeholder="Descrição" th:field="*{tempo.descricao}"/>
+			<input type="text" class="form-control" placeholder="Data" th:field="*{tempo.data}"/>
+			
+			<input type="text" class="form-control" placeholder="Cidade" th:field="*{cidade.nome}"/>
+			<input type="number" class="form-control" placeholder="Latitude" th:field="*{cidade.latitude}"/>
+			<input type="number" class="form-control" placeholder="Longitude" th:field="*{cidade.longitude}"/>
+			<button type="submit" class="btn btn-primary">Adicionar</button>
+		</form>
+
+	
+</body>
+</html>
